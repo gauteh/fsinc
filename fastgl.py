@@ -5,6 +5,36 @@ import numpy as np
 from sys import exit
 
 @numba.njit(parallel = True, cache = True)
+def lgwt(nx):
+  """
+  Helper for sinc1d, author: Gaute Hope, 2020
+  """
+  xx = np.zeros((nx,))
+  ww = np.zeros((nx,))
+  for a in numba.prange(nx):
+    _, ww[a], xx[a] = glpair(nx, a + 1)
+
+  return xx, ww
+
+@numba.njit(parallel = True, cache = True)
+def lgwt_triangle(nx):
+  """
+  Helper for sinc1dsq, author: Gaute Hope, 2020
+  """
+  xx = np.zeros((2*nx,))
+  ww = np.zeros((2*nx,))
+  for a in numba.prange(nx):
+    _, w, x = glpair(2*nx, a + 1)
+
+    xx[a] = x - 1
+    xx[a+nx] = x + 1
+
+    ww[a] = w
+    ww[a+nx] = w
+
+  return xx, ww
+
+@numba.njit(parallel = True, cache = True)
 def besselj1squared ( k ):
 
 #*****************************************************************************80
@@ -359,15 +389,14 @@ def glpair ( n, k ):
     print ( '' )
     print ( 'GLPAIR - Fatal error!' )
     print ( '  Illegal value of N.' )
-    # exit ( 'GLPAIR - Fatal error!' )
-    # raise ValueError
+    # return -1
 
   if ( k < 1 or n < k ):
     print ( '' )
     print ( 'GLPAIR - Fatal error!' )
     print ( '  Illegal value of K.' )
     # exit ( 'GLPAIR - Fatal error!' )
-    # raise ValueError
+    # return -1
 
   if ( n < 101 ):
     theta, weight, x = glpairtabulated ( n, k )
@@ -708,14 +737,14 @@ def glpairtabulated ( l, k ):
     print ( 'GLPAIRTABULATED - Fatal error!' )
     print ( '  Illegal value of L.' )
     # exit ( 'GLPAIRTABULATED - Fatal error!' )
-    # raise ValueError
+    # return -1
 
   if ( k < 1 or l < k ):
     print ( '' )
     print ( 'GLPAIRTABULATED - Fatal error!' )
     print ( '  Illegal value of K.' )
     # exit ( 'GLPAIRTABULATED - Fatal error!' )
-    # raise ValueError
+    # return -1
 
   theta = legendre_theta ( l, k )
   weight = legendre_weight ( l, k )
@@ -3431,7 +3460,7 @@ def legendre_theta ( l, k ):
     print ( 'LEGENDRE_THETA - Fatal error!' )
     print ( '  1 <= L <= 100 is required.' )
     # exit ( 'LEGENDRE_THETA - Fatal error!' )
-    # raise ValueError
+    # return -1
 
   lhalf = ( ( l + 1 ) // 2 )
 
@@ -3453,7 +3482,7 @@ def legendre_theta ( l, k ):
     print ( 'LEGENDRE_THETA - Fatal error!' )
     print ( '  1 <= K <= (L+1)/2 is required.' )
     # exit ( 'LEGENDRE_THETA - Fatal error!' )
-    # raise ValueError
+    # return -1
 #
 #  If L is odd, and K = ( L - 1 ) / 2, then it's easy.
 #
@@ -6459,7 +6488,7 @@ def legendre_weight ( l, k ):
     print ( 'LEGENDRE_WEIGHT - Fatal error!' )
     print ( '  1 <= L <= 100 is required.' )
     # exit ( 'LEGENDRE_WEIGHT - Fatal error!' )
-    # raise ValueError
+    # return -1
 
   lhalf = ( ( l + 1 ) // 2 )
 
@@ -6481,7 +6510,7 @@ def legendre_weight ( l, k ):
     print ( 'LEGENDRE_WEIGHT - Fatal error!' )
     print ( '  1 <= K <= (L+1)/2 is required.' )
     # exit ( 'LEGENDRE_WEIGHT - Fatal error!' )
-    # raise ValueError
+    # return -1
 #
 #  If L is odd, and K = ( L - 1 ) / 2, then it's easy.
 #
