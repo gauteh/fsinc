@@ -1,5 +1,10 @@
 #! /usr/bin/env python3
 #
+import numba
+import numpy as np
+from sys import exit
+
+@numba.njit(parallel = True, cache = True)
 def besselj1squared ( k ):
 
 #*****************************************************************************80
@@ -8,7 +13,7 @@ def besselj1squared ( k ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -33,7 +38,6 @@ def besselj1squared ( k ):
 #    Output, real Z, the value of the square of the Bessel
 #    J1 function at the K-th zero of the Bessel J0 function.
 #
-  import numpy as np
 
   j1 = np.array ( [ \
     0.269514123941916926139021992911E+00, \
@@ -89,7 +93,7 @@ def besselj1squared_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -131,6 +135,7 @@ def besselj1squared_test ( ):
   print ( '  Normal end of execution.' )
   return
 
+@numba.njit(parallel = True, cache = True)
 def besseljzero ( k ):
 
 #*****************************************************************************80
@@ -144,7 +149,7 @@ def besseljzero ( k ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -169,7 +174,7 @@ def besseljzero ( k ):
 #
 #    Output, real X, the value of the zero.
 #
-  import numpy as np
+  # import numpy as np
 
   jz = np.array ( [ \
     2.40482555769577276862163187933E+00, \
@@ -224,7 +229,7 @@ def besseljzero_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -272,7 +277,7 @@ def fastgl_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -304,6 +309,7 @@ def fastgl_test ( ):
   print ( '  Normal end of execution.' )
   return
 
+@numba.njit(parallel = True, cache = True)
 def glpair ( n, k ):
 
 #*****************************************************************************80
@@ -314,11 +320,11 @@ def glpair ( n, k ):
 #
 #    If N <= 100, GLPAIRTABULATED is called, otherwise GLPAIR is called.
 #
-#    Theta values of the zeros are in [0,pi], and monotonically increasing. 
+#    Theta values of the zeros are in [0,pi], and monotonically increasing.
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -344,22 +350,24 @@ def glpair ( n, k ):
 #    Input, integer K, the index of the point to be returned.
 #    1 <= K <= N.
 #
-#    Output, real THETA, WEIGHT, X, the theta coordinate, weight, 
+#    Output, real THETA, WEIGHT, X, the theta coordinate, weight,
 #    and x coordinate of the point.
 #
-  from sys import exit
+  # from sys import exit
 
   if ( n < 1 ):
     print ( '' )
     print ( 'GLPAIR - Fatal error!' )
     print ( '  Illegal value of N.' )
-    exit ( 'GLPAIR - Fatal error!' )
+    # exit ( 'GLPAIR - Fatal error!' )
+    # raise ValueError
 
   if ( k < 1 or n < k ):
     print ( '' )
     print ( 'GLPAIR - Fatal error!' )
     print ( '  Illegal value of K.' )
-    exit ( 'GLPAIR - Fatal error!' )
+    # exit ( 'GLPAIR - Fatal error!' )
+    # raise ValueError
 
   if ( n < 101 ):
     theta, weight, x = glpairtabulated ( n, k )
@@ -382,7 +390,7 @@ def glpair_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -429,6 +437,7 @@ def glpair_test ( ):
   print ( '  Normal end of execution.' )
   return
 
+@numba.njit(parallel = True, cache = True)
 def glpairs ( n, k ):
 
 #*****************************************************************************80
@@ -441,7 +450,7 @@ def glpairs ( n, k ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -467,23 +476,23 @@ def glpairs ( n, k ):
 #    Input, integer K, the index of the point to be returned.
 #    1 <= K <= N.
 #
-#    Output, real THETA, WEIGHT, X, the theta coordinate, weight, 
+#    Output, real THETA, WEIGHT, X, the theta coordinate, weight,
 #    and x coordinate of the point.
 #
-  import numpy as np
-  from sys import exit
+  # import numpy as np
+  # from sys import exit
 
   if ( n < 1 ):
     print ( '' )
     print ( 'GLPAIRS - Fatal error!' )
     print ( '  Illegal value of N.' )
-    exit ( 'GLPAIRS - Fatal error!' )
+    # exit ( 'GLPAIRS - Fatal error!' )
 
   if ( k < 1 or n < k ):
     print ( '' )
     print ( 'GLPAIRS - Fatal error!' )
     print ( '  Illegal value of K.' )
-    exit ( 'GLPAIRS - Fatal error!' )
+    # exit ( 'GLPAIRS - Fatal error!' )
 
   if ( n < ( 2 * k - 1 ) ):
     kcopy = n - k + 1
@@ -572,7 +581,7 @@ def glpairs ( n, k ):
   bnuosin = b * nuosin
   winvsinc = w * w * nuosin
   wis2 = winvsinc * winvsinc
-# 
+#
 #  Finally compute the node and the weight.
 #
   theta = w * ( nu + theta * winvsinc \
@@ -597,12 +606,12 @@ def glpairs_test ( ):
 #
 #    Test the numerical integration of cos(1000 x) over the range [-1,1]
 #    for varying number of Gauss-Legendre quadrature nodes l.
-#    The fact that only twelve digits of accuracy are obtained is due to the 
+#    The fact that only twelve digits of accuracy are obtained is due to the
 #    condition number of the summation.
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -651,6 +660,7 @@ def glpairs_test ( ):
   print ( '  Normal end of execution.' )
   return
 
+@numba.njit(parallel = True, cache = True)
 def glpairtabulated ( l, k ):
 
 #*****************************************************************************80
@@ -663,7 +673,7 @@ def glpairtabulated ( l, k ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -689,28 +699,28 @@ def glpairtabulated ( l, k ):
 #    Input, integer K, the index of the point to be returned.
 #    1 <= K <= L.
 #
-#    Output, real THETA, WEIGHT, X, the theta coordinate, weight, 
+#    Output, real THETA, WEIGHT, X, the theta coordinate, weight,
 #    and x coordinate of the point.
 #
-  import numpy as np
-  from sys import exit
 
   if ( l < 1 or 100 < l ):
     print ( '' )
     print ( 'GLPAIRTABULATED - Fatal error!' )
     print ( '  Illegal value of L.' )
-    exit ( 'GLPAIRTABULATED - Fatal error!' )
+    # exit ( 'GLPAIRTABULATED - Fatal error!' )
+    # raise ValueError
 
   if ( k < 1 or l < k ):
     print ( '' )
     print ( 'GLPAIRTABULATED - Fatal error!' )
     print ( '  Illegal value of K.' )
-    exit ( 'GLPAIRTABULATED - Fatal error!' )
+    # exit ( 'GLPAIRTABULATED - Fatal error!' )
+    # raise ValueError
 
   theta = legendre_theta ( l, k )
   weight = legendre_weight ( l, k )
 
-  x = np.cos ( theta )   
+  x = np.cos ( theta )
 
   return theta, weight, x
 
@@ -727,7 +737,7 @@ def glpairtabulated_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -773,6 +783,7 @@ def glpairtabulated_test ( ):
   print ( '  Normal end of execution.' )
   return
 
+@numba.njit(parallel = True, cache = True)
 def legendre_theta ( l, k ):
 
 #*****************************************************************************80
@@ -785,7 +796,7 @@ def legendre_theta ( l, k ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -813,8 +824,6 @@ def legendre_theta ( l, k ):
 #
 #    Output, real THETA, the theta coordinate of the point.
 #
-  import numpy as np
-  from sys import exit
 
   EvenThetaZero1 = np.array ( [ \
     0.9553166181245092781638573E+00 ] )
@@ -2141,7 +2150,7 @@ def legendre_theta ( l, k ):
     0.8610639001623934211634967E-01, \
     0.5492592372249737419414775E-01, \
     0.2392851379957687254895331E-01 ] )
-  
+
   OddThetaZero1 = np.array ( [ \
     0.6847192030022829138880982E+00 ] )
   OddThetaZero2 = np.array ( [ \
@@ -3416,12 +3425,13 @@ def legendre_theta ( l, k ):
     0.8697177361567243680812898E-01, \
     0.5547793843128156580348541E-01, \
     0.2416899936118312040170588E-01 ] )
- 
+
   if ( l < 1 or 100 < l ):
     print ( '' )
     print ( 'LEGENDRE_THETA - Fatal error!' )
     print ( '  1 <= L <= 100 is required.' )
-    exit ( 'LEGENDRE_THETA - Fatal error!' )
+    # exit ( 'LEGENDRE_THETA - Fatal error!' )
+    # raise ValueError
 
   lhalf = ( ( l + 1 ) // 2 )
 
@@ -3437,12 +3447,13 @@ def legendre_theta ( l, k ):
       kcopy = k - lhalf
     else:
       kcopy = lhalf + 1 - k
-  
+
   if ( kcopy < 1 or lhalf < kcopy ):
     print ( '' )
     print ( 'LEGENDRE_THETA - Fatal error!' )
     print ( '  1 <= K <= (L+1)/2 is required.' )
-    exit ( 'LEGENDRE_THETA - Fatal error!' )
+    # exit ( 'LEGENDRE_THETA - Fatal error!' )
+    # raise ValueError
 #
 #  If L is odd, and K = ( L - 1 ) / 2, then it's easy.
 #
@@ -3660,7 +3671,7 @@ def legendre_theta_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -3677,7 +3688,6 @@ def legendre_theta_test ( ):
 #    SIAM Journal on Scientific Computing,
 #    Volume 36, Number 3, 2014, pages A1008-1026.
 #
-  import numpy as np
   import platform
 
   print ( '' )
@@ -3703,6 +3713,7 @@ def legendre_theta_test ( ):
   print ( '  Normal end of execution.' )
   return
 
+@numba.njit(parallel = True, cache = True)
 def legendre_weight ( l, k ):
 
 #*****************************************************************************80
@@ -3711,7 +3722,7 @@ def legendre_weight ( l, k ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -3739,8 +3750,6 @@ def legendre_weight ( l, k ):
 #
 #    Output, real WEIGHT, the weight of the point.
 #
-  import numpy as np
-  from sys import exit
 
   cl = np.array ( [ \
     1.0E+00, \
@@ -5169,7 +5178,7 @@ def legendre_weight ( l, k ):
     0.2683925371553482419437272E-02, \
     0.1709392653518105239533969E-02, \
     0.7346344905056717304142370E-03 ] )
-  
+
   OddW1 = np.array ( [ \
     0.5555555555555555555555555E+00  ] )
   OddW2 = np.array ( [ \
@@ -6449,7 +6458,8 @@ def legendre_weight ( l, k ):
     print ( '' )
     print ( 'LEGENDRE_WEIGHT - Fatal error!' )
     print ( '  1 <= L <= 100 is required.' )
-    exit ( 'LEGENDRE_WEIGHT - Fatal error!' )
+    # exit ( 'LEGENDRE_WEIGHT - Fatal error!' )
+    # raise ValueError
 
   lhalf = ( ( l + 1 ) // 2 )
 
@@ -6465,12 +6475,13 @@ def legendre_weight ( l, k ):
       kcopy = k - lhalf
     else:
       kcopy = lhalf + 1 - k
-  
+
   if ( kcopy < 1 or lhalf < kcopy ):
     print ( '' )
     print ( 'LEGENDRE_WEIGHT - Fatal error!' )
     print ( '  1 <= K <= (L+1)/2 is required.' )
-    exit ( 'LEGENDRE_WEIGHT - Fatal error!' )
+    # exit ( 'LEGENDRE_WEIGHT - Fatal error!' )
+    # raise ValueError
 #
 #  If L is odd, and K = ( L - 1 ) / 2, then it's easy.
 #
@@ -6685,7 +6696,7 @@ def legendre_weight_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -6735,7 +6746,7 @@ def timestamp ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
@@ -6764,7 +6775,7 @@ def timestamp_test ( ):
 #
 #  Licensing:
 #
-#    This code is distributed under the GNU LGPL license. 
+#    This code is distributed under the GNU LGPL license.
 #
 #  Modified:
 #
