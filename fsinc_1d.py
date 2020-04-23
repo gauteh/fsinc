@@ -29,27 +29,29 @@ def sinc1d_interp(x, s, xp):
 
   return sinc1d(x, s, xp)
 
-def sinc1d_interp_nu3(x, s, xp):
+def sinc1d_interp_nu3(x, s, xp, B = 3.):
   """
   Interpolate the non-uniform samples s(x) onto xp (which could also be non-uniform).
 
   This uses a sinc2 weighting of the non-uniform samples according to eq. 34 in Choi and
-  Munson, 1998.
+  Munson, 1998. Or what is referred to as type Sinc-3.
 
   Args:
     x (array, floats): non-uniform sample points
     s (array, floats): non-uniform sample values
     xp (array, floats): points of interpolated signal
+    B (float): bandlimit of s(x) (default: 3.)
 
   Returns:
     sp (array, floats): interpolated signal at xp.
 
   """
-  B = 1. / np.mean(np.diff(x))
-  # B = 3.3
+  # B = 1. / np.mean(np.diff(x))
+  # B = 3.
   # B = 4.
   # B = 10
-  print('bandwidth:', B)
+  B = np.float(B)
+  print('bandlimit:', B)
 
   # x = np.arange(0, x.size, 1)
   # xp = xp * B
@@ -71,7 +73,7 @@ def sinc1d(x, s, xp):
   xp = xp * np.pi
   xm = np.max( [np.max(np.abs(x)), np.max(np.abs(xp)) ])
 
-  resample = 2 # resample rate
+  resample = 4 # resample rate
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
 
   # calculate Legendre-Gauss quadrature weights
@@ -97,10 +99,6 @@ def sinc1d(x, s, xp):
     return sp
 
 def sincsq1d(x, s, xp):
-  """
-  Expects x to be normalized from 0 to N integers, and xp to be normalized with
-  bandwidth of x.
-  """
   assert len(x) == len(s)
 
   eps = 1.e-15
@@ -110,7 +108,7 @@ def sincsq1d(x, s, xp):
   xp = xp * np.pi
   xm = np.max( [np.max(np.abs(x)), np.max(np.abs(xp)) ])
 
-  resample = 2 # resample rate
+  resample = 4 # resample rate
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
 
   # calculate Legendre-Gauss quadrature weights
