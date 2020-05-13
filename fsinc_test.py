@@ -12,7 +12,7 @@ def test_1d_u_to_nu():
   print(x)
   print(xp)
   print(x.size, xp.size)
-  sp = fsinc.sinc1d_interp(x, s, xp)
+  sp = fsinc.sinc1d_interp_u(x, s, xp)
 
   ssp = np.sin(2*np.pi*xp) + 2 * np.cos(.2 * xp)
 
@@ -47,7 +47,7 @@ def test_1d_nu_to_nu():
 
   xp = np.sort(np.random.uniform(-4, 4, 100))
   print(x.size, xp.size)
-  sp = fsinc.sinc1d_interp_nu3(x, s, xp)
+  sp = fsinc.sinc1d_interp_nu2(x, s, xp, 30.)
 
   ssp = np.sin(2*np.pi*xp) + 2 * np.cos(.2 * xp)
 

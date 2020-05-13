@@ -1,9 +1,8 @@
-import numba
 import numpy as np
-import finufftpy as nufft
-import fastgl
 
-def sinc1d_interp(x, s, xp):
+from fsinc_1d import sinc1d
+
+def sinc1d_interp_u(x, s, xp):
   """
   Interpolate the uniform samples s(x) onto xp (which could also non-uniform). If
   the samples s(x) are uniform and satisfy the Nyquist-criterion the signal at `xp` is
@@ -26,4 +25,4 @@ def sinc1d_interp(x, s, xp):
   x = np.arange(0, x.size, 1)
   xp = xp * B
 
-  return sinc1d(x, s, xp)
+  return sinc1d(x, s, xp, True)
