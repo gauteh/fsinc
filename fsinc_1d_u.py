@@ -22,7 +22,8 @@ def sinc1d_interp_u(x, s, xp):
   B = 1. / np.mean(np.diff(x))
   print('bandwidth:', B)
 
-  x = np.arange(0, x.size, 1)
+  # x = np.arange(0, x.size, 1)
+  x = x * B
   xp = xp * B
 
   return sinc1d(x, s, xp, True)
