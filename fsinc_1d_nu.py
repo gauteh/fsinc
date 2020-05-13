@@ -4,11 +4,11 @@ import finufftpy as nufft
 import fastgl
 
 
-def sinc1d_interp_nu1(x, s, xp, B = 3.):
+def sinc1d_interp_nu2(x, s, xp, B = 3.):
   """
   Interpolate the non-uniform samples s(x) onto xp (which could also be non-uniform).
 
-  This uses the difference between the samples as weighting.
+  This uses Jacobian weighting (the difference between the samples as weighting).
 
   Args:
     x (array, floats): non-uniform sample points

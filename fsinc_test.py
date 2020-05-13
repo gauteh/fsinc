@@ -30,7 +30,7 @@ def test_1d_nu_to_u():
 
   xp = np.arange(-4, 4, 1./100)
   print(x.size, xp.size)
-  sp = fsinc.sinc1d_interp_nu1(x, s, xp, 30.)
+  sp = fsinc.sinc1d_interp_nu2(x, s, xp, 30.)
 
   plt.figure()
   plt.plot(x, s, label = 'uniform')
