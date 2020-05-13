@@ -1,6 +1,6 @@
 import numpy as np
 import finufftpy as nufft
-import fastgl
+from . import fastgl
 
 def sinc1d(x, s, xp, norm = False):
   """
@@ -30,20 +30,20 @@ def sinc1d(x, s, xp, norm = False):
   resample = 2 # resample rate
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
 
-  print('calculate Legendre-Gauss weights (using fastgl)', nx)
+  print('calculate Legendre-Gauss weights (using fastgl), nodes:', nx)
   xx, ww = fastgl.lgwt(nx)
 
-  print('nufft1')
+  # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx (G-L nodes)
-  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 1, spread_debug = 1)
+  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0)
   assert status == 0
 
   # integrate signal using G-L quadrature
   ws = h * ww
 
-  print('nufft2')
+  # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 1, spread_debug = 1)
+  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0)
   sp = .5 * sp
   assert status == 0
 
@@ -83,22 +83,22 @@ def sincsq1d(x, s, xp, norm = False):
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
 
   # calculate Legendre-Gauss quadrature weights
-  print('calculate Legendre-Gauss weights (using fastgl)', nx)
+  # print('calculate Legendre-Gauss weights (using fastgl)', nx)
   xx, ww = fastgl.lgwt(nx)
   xx = np.concatenate((xx-1, xx+1)) # covers [-2, 2]
   ww = np.concatenate((ww, ww))
 
-  print('nufft1')
+  # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 1, spread_debug = 1)
+  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0)
   assert status == 0
 
   # integrated signal
   ws = h * ww * (2 - np.abs(xx))
 
-  print('nufft2')
+  # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 1, spread_debug = 1)
+  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0)
   sp = sp * 0.25
   assert status == 0
 

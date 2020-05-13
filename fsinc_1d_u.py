@@ -1,6 +1,6 @@
 import numpy as np
 
-from fsinc_1d import sinc1d
+from .fsinc_1d import sinc1d
 
 def sinc1d_interp_u(x, s, xp):
   """

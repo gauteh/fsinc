@@ -1,6 +1,6 @@
 import numpy as np
 
-from fsinc_1d import *
+from .fsinc_1d import *
 
 def sinc1d_interp_nu2(x, s, xp, B = 3.):
   """
