@@ -1,7 +1,7 @@
 import numpy as np
 import fsinc
 
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 def test_1d_u_to_nu():
   x = np.arange(0, 5, .001)
@@ -30,7 +30,7 @@ def test_1d_nu_to_u():
 
   xp = np.arange(-4, 4, 1./100)
   print(x.size, xp.size)
-  sp = fsinc.sinc1d_interp_nu2(x, s, xp, 30.)
+  sp = fsinc.sinc1d_interp_nu2(x, s, xp, 20.)
 
   # plt.figure()
   # plt.plot(x, s, label = 'uniform')
