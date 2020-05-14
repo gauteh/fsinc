@@ -41,34 +41,37 @@ def test_2d_nu_to_u_2():
   x = np.sort(np.random.uniform(0, 5, 5000))
   y = np.sort(np.random.uniform(0, 5, 5000))
 
+  # wsx = np.diff(x) # use difference as weights
+  # wsx = np.append(wsx, wsx[-1])
 
-  wsx = np.diff(x) # use difference as weights
-  wsx = np.append(wsx, wsx[-1])
+  # wsy = np.diff(y)
+  # wsy = np.append(wsy, wsy[-1])
+  # wsy.shape = (wsy.shape[0], 1)
 
-  wsy = np.diff(y)
-  wsy = np.append(wsy, wsy[-1])
-  wsy.shape = (wsy.shape[0], 1)
-
-  ws = wsx * wsy
-  print("ws:", ws.shape)
-  ws = ws.ravel()
+  # ws = wsx * wsy
+  # print("ws:", ws.shape)
+  # ws = ws.ravel()
 
   x, y = np.meshgrid(x, y)
   pps = x.shape
   x, y = x.ravel(), y.ravel()
   s = np.sin(2*np.pi*x) * 2 * np.cos(y*np.pi)
+  print("max,min=", np.max(s), np.min(s))
 
   plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
+  plt.xlim([.2, 4.5])
+  plt.ylim([.2, 4.5])
   plt.colorbar()
 
 
-  xp = np.arange(.2, 4.5, .1)
-  yp = np.arange(.2, 4.5, .1)
+  xp = np.arange(.2, 4.5, .01)
+  yp = np.arange(.2, 4.5, .01)
   ps = (xp.size, yp.size)
   xp, yp = np.meshgrid(xp, yp)
   xp, yp = xp.ravel(), yp.ravel()
 
-  sp = fsinc.sinc2d_interp_nu2(x, y, s * ws, 100., xp, yp)
+  sp = fsinc.sinc2d_interp_nu2(x, y, s, 60., xp, yp)
+  print("sp -> max,min=", np.max(sp), np.min(sp))
   xp = xp.reshape(ps)
   yp = yp.reshape(ps)
   sp = sp.reshape(ps)
@@ -82,4 +85,26 @@ def test_2d_nu_to_u_2():
 
   np.testing.assert_allclose(sp, ssp, rtol = 1.e-1, atol = 2e-2)
 
+def test_jacobi_1d():
+  x = np.array([1, 2, 3, 4, 8, 12, 16])
+  print(fsinc.jacobi_1d(x))
+
+  print(np.gradient(x))
+  print(np.gradient(x, np.arange(0, x.size)))
+  print(1./np.gradient(np.arange(0, x.size), x))
+
+def test_jacobi_2d():
+  x = np.array([1, 2, 3, 4, 8, 12, 16])
+  y = np.array([4, 5, 6, 10, 14, 18, 22])
+
+  xx, yy = np.meshgrid(x, y)
+  print("xx=", xx)
+  print("yy=", yy)
+
+  xx, yy = xx.ravel(), yy.ravel()
+  print("xx=", xx)
+  print("yy=", yy)
+
+  print("dxx =", fsinc.jacobi_1d(xx))
+  print("dyy =", fsinc.jacobi_1d(yy))
 

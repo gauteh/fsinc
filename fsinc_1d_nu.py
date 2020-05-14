@@ -23,9 +23,16 @@ def sinc1d_interp_nu2(x, s, xp, B = 3.):
   B = np.float(B)
   print('bandlimit:', B)
 
-  ws = np.diff(x) # use difference as weights
-  ws = np.append(ws, ws[-1])
+  ws = jacobi_1d(x)
   return (B / np.pi) * sinc1d(B * x, ws * s, B * xp)
+
+def jacobi_1d(x):
+  """
+  The difference between each sample is used as weight.
+  """
+  w = np.diff(x)
+  w = np.append(w, w[-1])
+  return w
 
 def sinc1d_interp_nu3(x, s, xp, B = 3.):
   """

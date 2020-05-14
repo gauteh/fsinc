@@ -27,16 +27,30 @@ def sinc2d_interp_nu2(x, y, s, B, xp, yp):
   assert len(s.shape) == 1
 
   B = np.float(B)
+  ws = jacobi_2d(x, y)
 
-  wsx = np.diff(x) # use difference as weights
+  return (B / np.pi) * sinc2d(B * x, B * y, ws * s, B * xp, B * yp)
+
+def jacobi_2d(x, y):
+  """
+  The difference between the samples are used as weight.
+  """
+  x = np.reshape(x, (5000, 5000))[0,:]
+  y = np.reshape(y, (5000, 5000))[:,0]
+  print(x, y)
+
+  wsx = np.diff(x)
   wsx = np.append(wsx, wsx[-1])
 
   wsy = np.diff(y)
   wsy = np.append(wsy, wsy[-1])
+
   wsy.shape = (wsy.shape[0], 1)
+  ws = (wsx * wsy).ravel()
 
-  ws = np.dot(wsx, wsy).ravel()
+  # ws = np.sqrt(wsx**2 + wsy**2)
 
-  return (B / np.pi) * sinc2d(B * x, B * y, s, B * xp, B * yp)
+  print("jacobi2d, sh, max, sum:", ws.shape, np.max(ws), np.sum(ws))
+  return ws
 
 

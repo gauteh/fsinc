@@ -17,6 +17,27 @@ def lgwt(nx):
   return xx, ww
 
 @numba.njit(parallel = True, cache = True)
+def lgwt2d(nx, ny):
+  """
+  Helper for sinc2d, author: Gaute Hope, 2020
+  """
+  xx = np.zeros((nx*ny,))
+  yy = np.zeros((nx*ny,))
+  ww = np.zeros((nx*ny,))
+  for a in numba.prange(ny):
+    _, wy, y = glpair(ny, a + 1)
+
+    for b in numba.prange(nx):
+      _, wx, x = glpair(nx, b + 1)
+
+      xx[a*nx + b] = x
+      yy[a*nx + b] = y
+      ww[a*nx + b] = wy * wx
+
+
+  return xx, yy, ww
+
+@numba.njit(parallel = True, cache = True)
 def lgwt_triangle(nx):
   """
   Helper for sinc1dsq, author: Gaute Hope, 2020

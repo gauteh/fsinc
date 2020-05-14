@@ -36,16 +36,8 @@ def sinc2d(x, y, s, xp, yp, norm = False):
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
   ny = np.ceil(resample * np.round(ym + 3)).astype('int')
 
-  print('calculate Legendre-Gauss weights (using fastgl), nodes:', nx)
-  xx, wwx = fastgl.lgwt(nx)
-  yy, wwy = fastgl.lgwt(ny)
-
-  xx, yy = np.meshgrid(xx, yy)
-  xx, yy = xx.ravel(), yy.ravel()
-
-  wwx, wwy = np.meshgrid(wwx, wwy)
-  wwx, wwy = wwx.ravel(), wwy.ravel()
-  ww = wwx * wwy
+  print('calculate Legendre-Gauss weights (using fastgl), nodes:', nx, "x", ny)
+  xx, yy, ww = fastgl.lgwt2d(nx, ny)
 
   # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx (G-L nodes)
