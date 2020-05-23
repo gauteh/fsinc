@@ -38,8 +38,8 @@ def test_2d_u_to_nu():
 
 
 def test_2d_nu_to_u_2():
-  x = np.sort(np.random.uniform(0, 5, 5000))
-  y = np.sort(np.random.uniform(0, 5, 5000))
+  x = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
+  y = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
 
   # wsx = np.diff(x) # use difference as weights
   # wsx = np.append(wsx, wsx[-1])
@@ -58,10 +58,10 @@ def test_2d_nu_to_u_2():
   s = np.sin(2*np.pi*x) * 2 * np.cos(y*np.pi)
   print("max,min=", np.max(s), np.min(s))
 
-  plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
-  plt.xlim([.2, 4.5])
-  plt.ylim([.2, 4.5])
-  plt.colorbar()
+  # plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
+  # plt.xlim([.2, 4.5])
+  # plt.ylim([.2, 4.5])
+  # plt.colorbar()
 
 
   xp = np.arange(.2, 4.5, .01)
@@ -70,7 +70,7 @@ def test_2d_nu_to_u_2():
   xp, yp = np.meshgrid(xp, yp)
   xp, yp = xp.ravel(), yp.ravel()
 
-  sp = fsinc.sinc2d_interp_nu2(x, y, s, 60., xp, yp)
+  sp = fsinc.sinc2d_interp_nu2(x, y, s, 20., xp, yp)
   print("sp -> max,min=", np.max(sp), np.min(sp))
   xp = xp.reshape(ps)
   yp = yp.reshape(ps)

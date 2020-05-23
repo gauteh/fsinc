@@ -1,6 +1,7 @@
 import numpy as np
 
 from .fsinc_2d import sinc2d
+from .jacobian import jacobian_2d_sk, jacobian_2d_ktree
 
 def sinc2d_interp_nu2(x, y, s, B, xp, yp):
   """
@@ -27,13 +28,17 @@ def sinc2d_interp_nu2(x, y, s, B, xp, yp):
   assert len(s.shape) == 1
 
   B = np.float(B)
-  ws = jacobi_2d(x, y)
+  print("calcuating jacobian (2d)")
+  # ws = jacobian_2d_sk(x, y)
+  # ws = jacobi_2d_approx(x, y)
+  ws = jacobian_2d_ktree(x, y)
+  print("done")
 
   return (B / np.pi) * sinc2d(B * x, B * y, ws * s, B * xp, B * yp)
 
-def jacobi_2d(x, y):
+def jacobi_2d_rs(x, y):
   """
-  The difference between the samples are used as weight.
+  The difference between the samples are used as weights.
   """
   x = np.reshape(x, (5000, 5000))[0,:]
   y = np.reshape(y, (5000, 5000))[:,0]
@@ -49,6 +54,25 @@ def jacobi_2d(x, y):
   ws = (wsx * wsy).ravel()
 
   # ws = np.sqrt(wsx**2 + wsy**2)
+
+  print("jacobi2d, sh, max, sum:", ws.shape, np.max(ws), np.sum(ws))
+  return ws
+
+
+def jacobi_2d_approx(x, y):
+  """
+  The difference between the samples are used as weights.
+  """
+  wsx = np.diff(x)
+  wsx = np.append(wsx, wsx[-1])
+
+  wsy = np.diff(y)
+  wsy = np.append(wsy, wsy[-1])
+
+  # wsy.shape = (wsy.shape[0], 1)
+  # ws = (wsx * wsy).ravel()
+
+  ws = np.sqrt(wsx**2 + wsy**2)
 
   print("jacobi2d, sh, max, sum:", ws.shape, np.max(ws), np.sum(ws))
   return ws
