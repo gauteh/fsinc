@@ -32,8 +32,8 @@ def sinc2d_interp_nu2(x, y, s, B, xp, yp):
   # ws = jacobian_2d_sk(x, y)
   # ws = jacobi_2d_approx(x, y)
   ws = jacobian_2d_ktree(x, y)
-  print("done")
 
+  print("calculating sinc2d")
   return (B / np.pi) * sinc2d(B * x, B * y, ws * s, B * xp, B * yp)
 
 def jacobi_2d_rs(x, y):
