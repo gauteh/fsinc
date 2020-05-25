@@ -108,9 +108,7 @@ def sinc2d_interp_nu3(x, y, s, B, xp, yp):
   # ws = jacobi_2d_approx(x, y)
   # ws = jacobian_2d_ktree(x, y)
 
-  # weights2=(pi/sigma)./sincsq2d(0,sigma*X(:),sigma*Y(:),sigma*X(:),sigma*Y(:),ones(1,length(X(:))),1e-10,'trap'); %Option 2
-
-  ws = (np.pi / B) / sincsq2d(B*x, B*y, B*x, B*y, np.ones(x.shape))
+  ws = (np.pi / B) / sincsq2d(B*x, B*y, np.ones(x.shape), B*x, B*y)
 
   print("calculating sinc2d")
   return (B / np.pi) * sinc2d(B * x, B * y, ws * s, B * xp, B * yp)

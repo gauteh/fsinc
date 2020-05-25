@@ -106,7 +106,7 @@ def test_2d_nu_to_u_3():
   xp, yp = np.meshgrid(xp, yp)
   xp, yp = xp.ravel(), yp.ravel()
 
-  sp = fsinc.sinc2d_interp_nu3(x, y, s, 20., xp, yp)
+  sp = fsinc.sinc2d_interp_nu3(x, y, s, 40., xp, yp)
   print("sp -> max,min=", np.max(sp), np.min(sp))
   xp = xp.reshape(ps)
   yp = yp.reshape(ps)
