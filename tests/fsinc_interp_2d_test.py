@@ -85,6 +85,42 @@ def test_2d_nu_to_u_2():
 
   np.testing.assert_allclose(sp, ssp, rtol = 1.e-1, atol = 2e-2)
 
+def test_2d_nu_to_u_3():
+  x = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
+  y = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
+
+  x, y = np.meshgrid(x, y)
+  pps = x.shape
+  x, y = x.ravel(), y.ravel()
+  s = np.sin(2*np.pi*x) * 2 * np.cos(y*np.pi)
+  print("max,min=", np.max(s), np.min(s))
+
+  # plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
+  # plt.xlim([.2, 4.5])
+  # plt.ylim([.2, 4.5])
+  # plt.colorbar()
+
+  xp = np.arange(.2, 4.5, .01)
+  yp = np.arange(.2, 4.5, .01)
+  ps = (xp.size, yp.size)
+  xp, yp = np.meshgrid(xp, yp)
+  xp, yp = xp.ravel(), yp.ravel()
+
+  sp = fsinc.sinc2d_interp_nu3(x, y, s, 20., xp, yp)
+  print("sp -> max,min=", np.max(sp), np.min(sp))
+  xp = xp.reshape(ps)
+  yp = yp.reshape(ps)
+  sp = sp.reshape(ps)
+
+  plt.figure()
+  plt.pcolormesh(xp, yp, sp)
+  plt.colorbar()
+  plt.show()
+
+  ssp = np.sin(2*np.pi*xp) * 2 * np.cos(yp*np.pi)
+
+  np.testing.assert_allclose(sp, ssp, rtol = 1.e-1, atol = 2e-2)
+
 def test_jacobi_1d():
   x = np.array([1, 2, 3, 4, 8, 12, 16])
   print(fsinc.jacobi_1d(x))

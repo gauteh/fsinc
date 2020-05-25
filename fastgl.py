@@ -38,6 +38,46 @@ def lgwt2d(nx, ny):
   return xx, yy, ww
 
 @numba.njit(parallel = True, cache = True)
+def lgwt_tri_2d(nx, ny):
+  """
+  Helper for sincsq2d, author: Gaute Hope, 2020
+  """
+  xx = np.zeros((2*nx,))
+  wwx = np.zeros((2*nx,))
+
+  for a in numba.prange(nx):
+    _, wx, x = glpair(nx, a + 1)
+    xx[a] = x - 1
+    wwx[a] = wx * (2. - np.abs(x-1))
+
+    xx[a + nx] = x + 1
+    wwx[a + nx] = wx * (2. - np.abs(x+1))
+
+  yy = np.zeros((2*ny,))
+  wwy = np.zeros((2*ny,))
+
+  for a in numba.prange(ny):
+    _, wy, y = glpair(ny, a + 1)
+    yy[a] = y - 1
+    wwy[a] = wy * (2 - np.abs(y-1))
+
+    yy[a + ny] = y + 1
+    wwy[a + ny] = wy * (2 - np.abs(y+1))
+
+  z = 2*nx*2*ny
+  xxx = np.zeros((z,))
+  yyy = np.zeros((z,))
+  www = np.zeros((z,))
+
+  for a in numba.prange(2*ny):
+    for b in numba.prange(2*nx):
+      xxx[a*2*nx + b] = xx[b]
+      yyy[a*2*nx + b] = yy[a]
+      www[a*2*nx + b] = wwx[b] * wwy[a]
+
+  return xxx, yyy, www
+
+@numba.njit(parallel = True, cache = True)
 def lgwt_triangle(nx):
   """
   Helper for sinc1dsq, author: Gaute Hope, 2020
@@ -55,7 +95,7 @@ def lgwt_triangle(nx):
 
   return xx, ww
 
-@numba.njit(parallel = True, cache = True)
+@numba.njit(cache = True)
 def besselj1squared ( k ):
 
 #*****************************************************************************80
@@ -186,7 +226,7 @@ def besselj1squared_test ( ):
   print ( '  Normal end of execution.' )
   return
 
-@numba.njit(parallel = True, cache = True)
+@numba.njit(cache = True)
 def besseljzero ( k ):
 
 #*****************************************************************************80
@@ -360,7 +400,7 @@ def fastgl_test ( ):
   print ( '  Normal end of execution.' )
   return
 
-@numba.njit(parallel = True, cache = True)
+@numba.njit(cache = True)
 def glpair ( n, k ):
 
 #*****************************************************************************80
@@ -487,7 +527,7 @@ def glpair_test ( ):
   print ( '  Normal end of execution.' )
   return
 
-@numba.njit(parallel = True, cache = True)
+@numba.njit(cache = True)
 def glpairs ( n, k ):
 
 #*****************************************************************************80
@@ -710,7 +750,7 @@ def glpairs_test ( ):
   print ( '  Normal end of execution.' )
   return
 
-@numba.njit(parallel = True, cache = True)
+@numba.njit(cache = True)
 def glpairtabulated ( l, k ):
 
 #*****************************************************************************80
@@ -833,7 +873,7 @@ def glpairtabulated_test ( ):
   print ( '  Normal end of execution.' )
   return
 
-@numba.njit(parallel = True, cache = True)
+@numba.njit(cache = True)
 def legendre_theta ( l, k ):
 
 #*****************************************************************************80
@@ -3763,7 +3803,7 @@ def legendre_theta_test ( ):
   print ( '  Normal end of execution.' )
   return
 
-@numba.njit(parallel = True, cache = True)
+@numba.njit(cache = True)
 def legendre_weight ( l, k ):
 
 #*****************************************************************************80
