@@ -1,8 +1,6 @@
 import numpy as np
 import fsinc
 
-import matplotlib.pyplot as plt
-
 def sinc2d(x, y, s, xp, yp):
   sp = np.zeros((xp.size,))
 

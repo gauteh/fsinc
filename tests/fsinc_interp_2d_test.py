@@ -3,15 +3,16 @@ import fsinc
 
 import matplotlib.pyplot as plt
 
-def test_2d_u_to_nu():
+def test_2d_u_to_nu(plot):
   x = np.arange(0, 5, .01)
   y = np.arange(1, 4, .01)
 
   x, y = np.meshgrid(x, y)
   s = np.sin(2*np.pi*x) * 2 * np.cos(y*np.pi)
 
-  # plt.pcolormesh(x, y, s)
-  # plt.colorbar()
+  if plot:
+    plt.pcolormesh(x, y, s)
+    plt.colorbar()
 
   x, y, s = x.ravel(), y.ravel(), s.ravel()
   print(x.shape)
@@ -27,30 +28,20 @@ def test_2d_u_to_nu():
   yp = yp.reshape(ps)
   sp = sp.reshape(ps)
 
-#   plt.figure()
-#   plt.pcolormesh(xp, yp, sp)
-#   plt.colorbar()
-#   plt.show()
+  if plot:
+    plt.figure()
+    plt.pcolormesh(xp, yp, sp)
+    plt.colorbar()
+    plt.show()
 
   ssp = np.sin(2*np.pi*xp) * 2 * np.cos(yp*np.pi)
 
   np.testing.assert_allclose(sp, ssp, rtol = 1.e-1, atol = 2e-2)
 
 
-def test_2d_nu_to_u_2():
-  x = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
-  y = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
-
-  # wsx = np.diff(x) # use difference as weights
-  # wsx = np.append(wsx, wsx[-1])
-
-  # wsy = np.diff(y)
-  # wsy = np.append(wsy, wsy[-1])
-  # wsy.shape = (wsy.shape[0], 1)
-
-  # ws = wsx * wsy
-  # print("ws:", ws.shape)
-  # ws = ws.ravel()
+def test_2d_nu_to_u_2(plot):
+  x = np.sort(np.random.uniform(0, 5, np.sqrt(4.e6).astype('int')))
+  y = np.sort(np.random.uniform(0, 5, np.sqrt(4.e6).astype('int')))
 
   x, y = np.meshgrid(x, y)
   pps = x.shape
@@ -58,10 +49,11 @@ def test_2d_nu_to_u_2():
   s = np.sin(2*np.pi*x) * 2 * np.cos(y*np.pi)
   print("max,min=", np.max(s), np.min(s))
 
-  # plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
-  # plt.xlim([.2, 4.5])
-  # plt.ylim([.2, 4.5])
-  # plt.colorbar()
+  if plot:
+    plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
+    plt.xlim([.2, 4.5])
+    plt.ylim([.2, 4.5])
+    plt.colorbar()
 
 
   xp = np.arange(.2, 4.5, .01)
@@ -76,18 +68,19 @@ def test_2d_nu_to_u_2():
   yp = yp.reshape(ps)
   sp = sp.reshape(ps)
 
-  plt.figure()
-  plt.pcolormesh(xp, yp, sp)
-  plt.colorbar()
-  plt.show()
+  if plot:
+    plt.figure()
+    plt.pcolormesh(xp, yp, sp)
+    plt.colorbar()
+    plt.show()
 
   ssp = np.sin(2*np.pi*xp) * 2 * np.cos(yp*np.pi)
 
   np.testing.assert_allclose(sp, ssp, rtol = 1.e-1, atol = 2e-2)
 
-def test_2d_nu_to_u_3():
-  x = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
-  y = np.random.uniform(0, 5, np.sqrt(4.e6).astype('int'))
+def test_2d_nu_to_u_3(plot):
+  x = np.sort(np.random.uniform(0, 5, np.sqrt(4.e6).astype('int')))
+  y = np.sort(np.random.uniform(0, 5, np.sqrt(4.e6).astype('int')))
 
   x, y = np.meshgrid(x, y)
   pps = x.shape
@@ -95,10 +88,11 @@ def test_2d_nu_to_u_3():
   s = np.sin(2*np.pi*x) * 2 * np.cos(y*np.pi)
   print("max,min=", np.max(s), np.min(s))
 
-  # plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
-  # plt.xlim([.2, 4.5])
-  # plt.ylim([.2, 4.5])
-  # plt.colorbar()
+  if plot:
+    plt.pcolormesh(x.reshape(pps), y.reshape(pps), s.reshape(pps))
+    plt.xlim([.2, 4.5])
+    plt.ylim([.2, 4.5])
+    plt.colorbar()
 
   xp = np.arange(.2, 4.5, .01)
   yp = np.arange(.2, 4.5, .01)
@@ -112,10 +106,11 @@ def test_2d_nu_to_u_3():
   yp = yp.reshape(ps)
   sp = sp.reshape(ps)
 
-  plt.figure()
-  plt.pcolormesh(xp, yp, sp)
-  plt.colorbar()
-  plt.show()
+  if plot:
+    plt.figure()
+    plt.pcolormesh(xp, yp, sp)
+    plt.colorbar()
+    plt.show()
 
   ssp = np.sin(2*np.pi*xp) * 2 * np.cos(yp*np.pi)
 
