@@ -22,7 +22,7 @@ jobs:
           name: Running tests
           command: |
             . venv/bin/activate
-            pytest -vv
+            pytest -vv --durations 10
       - save_cache:
           key: numba1-{{ .Branch }}-{{ checksum "fsinc/fastgl.py" }}
           paths:
