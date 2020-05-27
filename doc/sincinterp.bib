@@ -1,0 +1,147 @@
+@book{Twardos2004,
+author = {Twardos, Michael},
+file = {:home/gauteh/artiklar/Twardos - 2004 - The Physics of Ocean Waves (for physicists and surfers).pdf:pdf},
+mendeley-groups = {Ocean waves},
+pages = {1--89},
+title = {{The Physics of Ocean Waves (for physicists and surfers)}},
+year = {2004},
+publisher = {{}}
+}
+
+
+@article{Keiner2009,
+abstract = {NFFT 3 is a software library that implements the nonequispaced fast Fourier transform (NFFT) and a number of related algorithms, for example, nonequispaced fast Fourier transforms on the sphere and iterative schemes for inversion. This article provides a survey on the mathematical concepts behind the NFFT and its variants, as well as a general guideline for using the library. Numerical examples for a number of applications are given. {\textcopyright} 2009 ACM.},
+author = {Keiner, Jens and Kunis, Stefan and Potts, Daniel},
+doi = {10.1145/1555386.1555388},
+file = {:home/gauteh/artiklar/Keiner, Kunis, Potts - 2008 - Using NFFT 3 – a software library for various nonequispaced fast Fourier transforms.pdf:pdf},
+issn = {00983500},
+journal = {ACM Transactions on Mathematical Software},
+keywords = {Approximative algorithms,Fast Fourier transforms},
+mendeley-groups = {NUFFT-Sinc},
+number = {4},
+pages = {1--23},
+title = {{Using NFFT 3 - -A software library for various nonequispaced fast fourier transforms}},
+volume = {36},
+year = {2009}
+}
+
+@article{Lee2005,
+abstract = {The nonequispaced or nonuniform fast Fourier transform (NUFFT) arises in a variety of application areas, including imaging processing and the numerical solution of partial differential equations. In its most general form, it takes as input an irregular sampling of a function and seeks to compute its Fourier transform at a nonuniform sampling of frequency locations. This is sometimes referred to as the NUFFT of type 3. Like the fast Fourier transform, the amount of work required is of the order O(N log N), where N denotes the number of sampling points in both the physical and spectral domains. In this short note, we present the essential ideas underlying the algorithm in simple terms. We also illustrate its utility with application to problems in magnetic resonance imagin and heat flow. {\textcopyright} 2005 Elsevier Inc. All rights reserved.},
+author = {Lee, June Yub and Greengard, Leslie},
+doi = {10.1016/j.jcp.2004.12.004},
+file = {:home/gauteh/artiklar/Lee, Greengard - 2005 - The type 3 nonuniform FFT and its applications.pdf:pdf},
+issn = {10902716},
+journal = {Journal of Computational Physics},
+keywords = {Fourier integral,Heat equation,Magnetic resonance imaging,Nonuniform fast Fourier transform},
+mendeley-groups = {NUFFT-Sinc},
+number = {1},
+pages = {1--5},
+title = {{The type 3 nonuniform FFT and its applications}},
+volume = {206},
+year = {2005}
+}
+
+
+@article{Dutt1993,
+abstract = {A group of algorithms is presented generalizing the fast Fourier transform to the case of noninteger frequencies and nonequispaced nodes on the interval {\$}[ - \backslashpi ,\backslashpi ]{\$}. The schemes of this paper are based on a combination of certain analytical considerations with the classical fast Fourier transform and generalize both the forward and backward FFTs. Each of the algorithms requires {\$}O(N\backslashcdot \backslashlog N + N\backslashcdot \backslashlog (1/\backslashvarepsilon )){\$} arithmetic operations, where {\$}\backslashvarepsilon {\$} is the precision of computations and N is the number of nodes. The efficiency of the approach is illustrated by several numerical examples.},
+author = {Dutt, A. and Rokhlin, V.},
+doi = {10.1137/0914081},
+file = {:home/gauteh/artiklar/Fuirtansforms, Dutt - 1993 - Ad-a2 7 2 687.pdf:pdf},
+issn = {1064-8275},
+journal = {SIAM Journal on Scientific Computing},
+mendeley-groups = {NUFFT-Sinc},
+number = {6},
+pages = {1368--1393},
+title = {{Fast Fourier Transforms for Nonequispaced Data}},
+volume = {14},
+year = {1993}
+}
+@article{Greengard2004,
+abstract = {The nonequispaced Fourier transform arises in a variety of application areas, from medical imaging to radio astronomy to the numerical solution of partial differential equations. In a typical problem, one is given an irregular sampling of N data in the frequency domain and one is interested in reconstructing the corresponding function in the physical domain. When the sampling is uniform, the fast Fourier transform (FFT) allows this calculation to be computed in O(N log N) operations rather than O(N 2) operations. Unfortunately, when the sampling is nonuniform, the FFT does not apply. Over the last few years, a number of algorithms have been developed to overcome this limitation and are often referred to as nonuniform FFTs (NUFFTs). These rely on a mixture of interpolation and the judicious use of the FFT on an oversampled grid [A. Dutt and V. Rokhlin, SIAM J. Sci. Comput., 14 (1993), pp. 1368-1383]. In this paper, we observe that one of the standard interpolation or "gridding" schemes, based on Gaussians, can be accelerated by a significant factor without precomputation and storage of the interpolation weights. This is of particular value in two- and three-dimensional settings, saving either 10 dJV in storage in d dimensions or a factor of about 5-10 in CPU time (independent of dimension).},
+author = {Greengard, Leslie and Lee, June Yub},
+doi = {10.1137/S003614450343200X},
+file = {:home/gauteh/artiklar/Greengard, Lee - 2004 - Accelerating the Nonuniform Fast Fourier Transform ∗.pdf:pdf},
+issn = {00361445},
+journal = {SIAM Review},
+keywords = {FFT,Fast gridding,Image reconstruction,Nonuniform fast fourier transform},
+mendeley-groups = {NUFFT-Sinc},
+number = {3},
+pages = {443--454},
+title = {{Accelerating the nonuniform fast Fourier transform}},
+volume = {46},
+year = {2004}
+}
+
+
+@article{Greengard2006,
+abstract = {A number of problems in image reconstruction and image processing can be addressed, in principle, using the sinc kernel. Since the sinc kernel decays slowly, however, it is generally avoided in favor of some more local but less precise choice. In this paper, we describe the fast sinc transform, an algorithm which computes the convolution of arbitrarily spaced data with the sinc kernel in O(N logN) operations, where N denotes the number of data points. We briefly discuss its application to the construction of optimal density compensation weights for Fourier reconstruction and to the iterative approximation of the pseudoinverse of the signal equation in MRI.},
+author = {Greengard, Leslie and Lee, June Yub and Inati, Souheil},
+doi = {10.2140/camcos.2006.1.121},
+file = {:home/gauteh/artiklar/Greengard, Lee, Inati - 2010 - THE FAST SINC TRANSFORM AND IMAGE RECONSTRUCTION FROM NONUNIFORM SAMPLES IN k-SPACE.pdf:pdf},
+isbn = {0001404105},
+issn = {21575452},
+journal = {Communications in Applied Mathematics and Computational Science},
+keywords = {Density compensation weights,Fast transform,Fourier analysis,Image reconstruction,Iterative methods,Magnetic resonance imaging (MRI),Nonuniform fast Fourier transform,Sinc interpolation},
+mendeley-groups = {NUFFT-Sinc},
+number = {1},
+pages = {121--131},
+title = {{The fast sinc transform and image reconstruction from nonuniform samples in k-space}},
+url = {http://www.physics.nyu.edu/{~}fh417/ensemble-sampler-with-affine-invariance.pdf},
+volume = {1},
+year = {2006}
+}
+
+@article{Choi1998,
+author = {Choi, H and Munson, D. C},
+file = {:home/gauteh/artiklar/Choi, Munson - 1998 - Analysis and Design of Minimax-Optimal Interpolators.pdf:pdf},
+mendeley-groups = {NUFFT-Sinc},
+title = {{Analysis and Design of Minimax-Optimal Interpolators}},
+year = {1998}
+}
+
+
+@article{Barnett2019,
+abstract = {The nonuniform fast Fourier transform (NUFFT) generalizes the FFT to off-grid data. Its many applications include image reconstruction, data analysis, and the numerical solution of differential equations. We present FINUFFT, an efficient parallel library for type 1 (nonuniform to uniform), type 2 (uniform to nonuniform), or type 3 (nonuniform to nonuniform) transforms, in dimensions 1, 2, or 3. It uses minimal RAM, requires no precomputation or plan steps, and has a simple interface to several languages. We perform the expensive spreading/interpolation between nonuniform points and the fine grid via a simple new kernel-the ""exponential of semicircle"" e$\backslash$beta $\backslash$surd 1 - x2 in x $\backslash$in [ - 1, 1]-in a cache-aware load-balanced multithreaded implementation. The deconvolution step requires the Fourier transform of the kernel, for which we propose efficient numerical quadrature. For types 1 and 2, rigorous error bounds asymptotic in the kernel width approach the fastest known exponential rate, namely that of the Kaiser-Bessel kernel. We benchmark against several popular CPU-based libraries, showing favorable speed and memory footprint, especially in three dimensions when high accuracy and/or clustered point distributions are desired.},
+archivePrefix = {arXiv},
+arxivId = {1808.06736},
+author = {Barnett, Alexander H. and Magland, Jeremy and Klinteberg, Ludvig A.F.},
+doi = {10.1137/18M120885X},
+eprint = {1808.06736},
+file = {:home/gauteh/artiklar/Barnett, Magland, Klinteberg - 2019 - A parallel nonuniform fast fourier transform library based on an exponential of semicircle kernel.pdf:pdf},
+issn = {10957197},
+journal = {SIAM Journal on Scientific Computing},
+keywords = {Kaiser-Bessel,Kernel,NFFT,Nonuniform,Parallel,Spreading},
+mendeley-groups = {NUFFT-Sinc},
+number = {5},
+pages = {C479--C504},
+title = {{A parallel nonuniform fast fourier transform library based on an "exponential of semicircle" kernel}},
+volume = {41},
+year = {2019}
+}
+
+
+@book{Oppenheim2014,
+author = {Oppenheim, Alan V. and Schafer, Ronald W.},
+booktitle = {Book},
+edition = {3rd},
+file = {:home/gauteh/artiklar/Oppenheim, Schafer - 2014 - Discrete-Time Signal Processing.pdf:pdf},
+isbn = {0137549202},
+mendeley-groups = {NUFFT-Sinc},
+title = {{Discrete-Time Signal Processing}},
+year = {2014}
+}
+
+
+@article{Shannon1948,
+author = {Shannon, C. E.},
+doi = {10.1002/j.1538-7305.1948.tb00917.x},
+file = {:home/gauteh/artiklar/Shannon - 1948 - A Mathematical Theory of Communication.pdf:pdf},
+issn = {15387305},
+journal = {Bell System Technical Journal},
+mendeley-groups = {NUFFT-Sinc},
+number = {4},
+pages = {623--656},
+title = {{A Mathematical Theory of Communication}},
+volume = {27},
+year = {1948}
+}

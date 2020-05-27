@@ -1,0 +1,7 @@
+name: pandoc
+channels:
+  - conda-forge
+dependencies:
+  - pandoc
+  - pandoc-crossref
+
