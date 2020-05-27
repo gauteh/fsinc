@@ -8,6 +8,6 @@ setup(
     author_email='gauteh@met.no',
     description='Implementation of fast sinc-transform based on https://github.com/hannahlawrence/sinctransform',
     packages=find_packages(),
-    install_requires=['numpy', 'numba'],
+    install_requires=['numpy', 'numba', 'scipy', 'matplotlib', 'finufftpy'],
 )
 
