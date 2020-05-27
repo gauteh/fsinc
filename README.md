@@ -7,7 +7,19 @@ A python implementation of the fast sinc-transform described by [Greengard et. a
   <img src="https://raw.githubusercontent.com/gauteh/fsinc/master/doc/example_2d.png" width="40%" />
 </p>
 
-Theory and details are described in [doc/fsinc.md](doc/fsinc.md) ([pdf](https://raw.githubusercontent.com/gauteh/fsinc/master/doc/fsinc.pdf)).
+Theory and details are described in more detail in [doc/fsinc.md](doc/fsinc.md) ([pdf](https://raw.githubusercontent.com/gauteh/fsinc/master/doc/fsinc.pdf)).
+
+There are a couple of examples in [examples/](examples/), tests can be run with `pytest`. To show plots during testing use `pytest --plot`.
+
+## Installation
+
+```sh
+pip install .
+```
+
+## Building docs
+
+Set up the environment in [doc/environment.yml](doc/environment.yml), install enough of tex-live and run `make` to generate `pdf` using `pandoc`.
 
 # References
 
