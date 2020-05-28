@@ -7,6 +7,8 @@ link-citations: true
 csl: https://www.zotero.org/styles/the-journal-of-the-acoustical-society-of-america
 ---
 
+![Sinc interpolation from non-uniform to uniform grids](example_2d.png)
+
 # Interpolating images using the sinc-interpolation formula
 
 A continuous signal, $s_c$, is sampled at discrete points $x_n$, so than
