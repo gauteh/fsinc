@@ -43,7 +43,7 @@ def test_1d_nu_to_u(plot):
   np.testing.assert_allclose(sp, ssp, rtol = .01, atol = .05)
 
 
-def test_1d_nu_to_nu(plot):
+def test_1d_nu_to_nu2(plot):
   x = np.sort(np.random.uniform(-5, 5, 5000))
   s = np.sin(2*np.pi*x) + 2 * np.cos(.2 * x)
 
@@ -59,4 +59,21 @@ def test_1d_nu_to_nu(plot):
 
   ssp = np.sin(2*np.pi*xp) + 2 * np.cos(.2 * xp)
   np.testing.assert_allclose(sp, ssp, rtol = .01, atol = .05)
+
+def test_1d_nu_to_nu3(plot):
+  x = np.sort(np.random.uniform(-5, 5, 5000))
+  s = np.sin(2*np.pi*x) + 2 * np.cos(.2 * x)
+
+  xp = np.sort(np.random.uniform(-4, 4, 100))
+  print(x.size, xp.size)
+  sp = fsinc.sinc1d_interp_nu3(x, s, xp, 30.)
+
+  if plot:
+    plt.figure()
+    plt.plot(x, s, label = 'uniform')
+    plt.plot(xp, sp, '--', label = 'interp NU')
+    plt.show()
+
+  ssp = np.sin(2*np.pi*xp) + 2 * np.cos(.2 * xp)
+  np.testing.assert_allclose(sp, ssp, rtol = .01, atol = .27)
 

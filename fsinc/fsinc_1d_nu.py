@@ -56,6 +56,6 @@ def sinc1d_interp_nu3(x, s, xp, B = 3.):
   B = np.float(B)
   print('bandlimit:', B)
 
-  ws = (np.pi / B) / sincsq1d(B * x, B * x, np.ones(x.shape)) # use sinc^2 weights
+  ws = (np.pi / B) / sincsq1d(B * x, np.ones(x.shape), B * x) # use sinc^2 weights
   return (B / np.pi) * sinc1d(B * x, ws * s, B * xp)
 
