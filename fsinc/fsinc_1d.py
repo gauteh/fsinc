@@ -85,10 +85,8 @@ def sincsq1d(x, s, xp, norm = False):
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
 
   # calculate Legendre-Gauss quadrature weights
-  # print('calculate Legendre-Gauss weights (using fastgl)', nx)
-  xx, ww = fastgl.lgwt_triangle(nx)
-  # xx = np.concatenate((xx-1, xx+1)) # covers [-2, 2]
-  # ww = np.concatenate((ww, ww))
+  print('calculate Legendre-Gauss weights (using fastgl)', nx)
+  xx, ww = fastgl.lgwt_tri(nx)
 
   # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx
@@ -96,12 +94,11 @@ def sincsq1d(x, s, xp, norm = False):
   assert status == 0
 
   # integrated signal
-  ws = .25 * h * ww * (2 - np.abs(xx))
+  ws = .25 * h * ww
 
   # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
   status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0)
-  # sp = sp * 0.25
   assert status == 0
 
   if np.all(np.isreal(s)):

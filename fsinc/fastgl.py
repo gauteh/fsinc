@@ -78,20 +78,20 @@ def lgwt_tri_2d(nx, ny):
   return xxx, yyy, www
 
 @numba.njit(parallel = True, cache = True)
-def lgwt_triangle(nx):
+def lgwt_tri(nx):
   """
-  Helper for sinc1dsq, author: Gaute Hope, 2020
+  Helper for sincsq1d, author: Gaute Hope, 2020
   """
   xx = np.zeros((2*nx,))
   ww = np.zeros((2*nx,))
   for a in numba.prange(nx):
-    _, w, x = glpair(2*nx, a + 1)
+    _, w, x = glpair(nx, a + 1)
 
     xx[a] = x - 1
     xx[a+nx] = x + 1
 
-    ww[a] = w
-    ww[a+nx] = w
+    ww[a] = w * (2 - np.abs(x-1))
+    ww[a+nx] = w * (2 - np.abs(x+1))
 
   return xx, ww
 
