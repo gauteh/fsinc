@@ -39,7 +39,7 @@ def sinc2d(x, y, s, xp, yp, norm = False, eps = 1.e-6):
 
   # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx (G-L nodes)
-  status = nufft.nufft2d3(x, y, s, -1, eps, xx, yy, h, debug = 0, spread_debug = 0)
+  status = nufft.nufft2d3(x, y, s, -1, eps, xx, yy, h, debug = 0, spread_debug = 0, upsampfac = 1.25)
   assert status == 0
 
   # integrate signal using G-L quadrature
@@ -47,7 +47,7 @@ def sinc2d(x, y, s, xp, yp, norm = False, eps = 1.e-6):
 
   # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft2d3(xx, yy, ws, 1, eps, xp, yp, sp, debug = 0, spread_debug = 0)
+  status = nufft.nufft2d3(xx, yy, ws, 1, eps, xp, yp, sp, debug = 0, spread_debug = 0, upsampfac = 1.25)
   assert status == 0
 
   if np.all(np.isreal(s)):
@@ -92,7 +92,7 @@ def sincsq2d(x, y, s, xp, yp, norm = False, eps = 1.e-6):
 
   # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx (G-L nodes)
-  status = nufft.nufft2d3(x, y, s, -1, eps, xx, yy, h, debug = 0, spread_debug = 0)
+  status = nufft.nufft2d3(x, y, s, -1, eps, xx, yy, h, debug = 0, spread_debug = 0, upsampfac = 1.25)
   assert status == 0
 
   # integrate signal using G-L quadrature
@@ -100,7 +100,7 @@ def sincsq2d(x, y, s, xp, yp, norm = False, eps = 1.e-6):
 
   # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft2d3(xx, yy, ws, 1, eps, xp, yp, sp, debug = 0, spread_debug = 0)
+  status = nufft.nufft2d3(xx, yy, ws, 1, eps, xp, yp, sp, debug = 0, spread_debug = 0, upsampfac = 1.25)
   assert status == 0
 
   if np.all(np.isreal(s)):

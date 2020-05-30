@@ -33,7 +33,7 @@ def sinc1d(x, s, xp, norm = False, eps = 1.e-6):
 
   # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx (G-L nodes)
-  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0)
+  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0, upsampfac = 1.25)
   assert status == 0
 
   # integrate signal using G-L quadrature
@@ -41,7 +41,7 @@ def sinc1d(x, s, xp, norm = False, eps = 1.e-6):
 
   # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0)
+  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0, upsampfac = 1.25)
   sp = .5 * sp
   assert status == 0
 
@@ -86,7 +86,7 @@ def sincsq1d(x, s, xp, norm = False, eps = 1.e-6):
 
   # Fwd FT
   h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0)
+  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0, upsampfac = 1.25)
   assert status == 0
 
   # integrated signal
@@ -94,7 +94,7 @@ def sincsq1d(x, s, xp, norm = False, eps = 1.e-6):
 
   # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0)
+  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0, upsampfac = 1.25)
   assert status == 0
 
   if np.all(np.isreal(s)):
