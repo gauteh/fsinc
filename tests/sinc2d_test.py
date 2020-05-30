@@ -10,6 +10,15 @@ def sinc2d(x, y, s, xp, yp):
 
   return sp
 
+def test_sinc2d_2k(benchmark):
+  x = np.linspace(-5, 5, 2000)
+  y = np.linspace(-5, 5, 2000)
+  s = np.sin(x)
+  xp = np.linspace(-4.5, 4.4, 2000)
+  yp = np.linspace(-4.5, 4.4, 2000)
+
+  benchmark(fsinc.sinc2d, x, y, s, xp, yp)
+
 def test_sinc2d_same():
   x = np.linspace(-5, 5, 100)
   y = np.linspace(-5, 5, 100)

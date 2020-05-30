@@ -10,6 +10,13 @@ def sincsq1d(x, s, xp):
 
   return sp
 
+def test_sincsq1d_2k(benchmark):
+  x = np.linspace(-5, 5, 2000)
+  s = np.sin(x)
+  xp = np.linspace(-4.5, 4.4, 2000)
+
+  benchmark(fsinc.sincsq1d, x, s, xp)
+
 def test_sincsq1d_same():
   x = np.linspace(-5, 5, 100)
   s = np.random.uniform(-100, 100, x.size)

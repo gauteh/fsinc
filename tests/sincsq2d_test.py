@@ -10,6 +10,15 @@ def sincsq2d(x, y, s, xp, yp):
 
   return sp
 
+def test_sincsq2d_2k(benchmark):
+  x = np.linspace(-5, 5, 2000)
+  y = np.linspace(-5, 5, 2000)
+  s = np.sin(x)
+  xp = np.linspace(-4.5, 4.4, 2000)
+  yp = np.linspace(-4.5, 4.4, 2000)
+
+  benchmark(fsinc.sincsq2d, x, y, s, xp, yp)
+
 def test_sincsq2d_same():
   x = np.linspace(-5, 5, 100)
   y = np.linspace(-5, 5, 100)

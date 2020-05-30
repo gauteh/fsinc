@@ -34,7 +34,6 @@ def lgwt2d(nx, ny):
       yy[a*nx + b] = y
       ww[a*nx + b] = wy * wx
 
-
   return xx, yy, ww
 
 @numba.njit(parallel = True, cache = True)

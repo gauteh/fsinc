@@ -45,12 +45,11 @@ def sinc2d(x, y, s, xp, yp, norm = False):
   assert status == 0
 
   # integrate signal using G-L quadrature
-  ws = h * ww
+  ws = (1./4.) * h * ww
 
   # Inv FT
   sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
   status = nufft.nufft2d3(xx, yy, ws, 1, eps, xp, yp, sp, debug = 0, spread_debug = 0)
-  sp = .25 * sp
   assert status == 0
 
   if np.all(np.isreal(s)):
