@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-#
 import numba
 import numpy as np
 from sys import exit
@@ -21,20 +20,29 @@ def lgwt2d(nx, ny):
   """
   Helper for sinc2d, author: Gaute Hope, 2020
   """
-  xx = np.zeros((nx*ny,))
-  yy = np.zeros((nx*ny,))
-  ww = np.zeros((nx*ny,))
+  xx = np.zeros((nx,))
+  yy = np.zeros((ny,))
+  wx = np.zeros((nx,))
+  wy = np.zeros((nx,))
+
+  for a in numba.prange(nx):
+    _, wx[a], xx[a] = glpair(nx, a + 1)
+
+  for b in numba.prange(ny):
+    _, wy[b], yy[b] = glpair(ny, b + 1)
+
+  z = nx * ny
+  xxx = np.zeros((z,))
+  yyy = np.zeros((z,))
+  www = np.zeros((z,))
+
   for a in numba.prange(ny):
-    _, wy, y = glpair(ny, a + 1)
-
     for b in numba.prange(nx):
-      _, wx, x = glpair(nx, b + 1)
+      xxx[a*nx + b] = xx[b]
+      yyy[a*nx + b] = yy[a]
+      www[a*nx + b] = wx[b] * wy[a]
 
-      xx[a*nx + b] = x
-      yy[a*nx + b] = y
-      ww[a*nx + b] = wy * wx
-
-  return xx, yy, ww
+  return xxx, yyy, www
 
 @numba.njit(parallel = True, cache = True)
 def lgwt_tri_2d(nx, ny):
