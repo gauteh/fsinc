@@ -2,7 +2,7 @@ import numpy as np
 import finufftpy as nufft
 from . import fastgl
 
-def sinc2d(x, y, s, xp, yp, norm = False):
+def sinc2d(x, y, s, xp, yp, norm = False, eps = 1.e-6):
   """
   Calculate the fast 2D sinc-transform by ways of the non-uniform fast Fourier transform.
 
@@ -19,8 +19,6 @@ def sinc2d(x, y, s, xp, yp, norm = False):
   Returns:
     sp (array, floats): transformed signal to (xp, yp)
   """
-
-  eps = 1.e-15
 
   # normalized sinc
   if norm:
@@ -57,7 +55,7 @@ def sinc2d(x, y, s, xp, yp, norm = False):
   else:
     return sp
 
-def sincsq2d(x, y, s, xp, yp, norm = False):
+def sincsq2d(x, y, s, xp, yp, norm = False, eps = 1.e-6):
   """
   Calculate the fast 2D sinc-transform squared by ways of the non-uniform fast Fourier transform.
 
@@ -74,8 +72,6 @@ def sincsq2d(x, y, s, xp, yp, norm = False):
   Returns:
     sp (array, floats): transformed signal to (xp, yp)
   """
-
-  eps = 1.e-15
 
   # normalized sinc
   if norm:

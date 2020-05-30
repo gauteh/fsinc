@@ -2,7 +2,7 @@ import numpy as np
 import finufftpy as nufft
 from . import fastgl
 
-def sinc1d(x, s, xp, norm = False):
+def sinc1d(x, s, xp, norm = False, eps = 1.e-6):
   """
   Calculate the fast sinc-transform by ways of the non-uniform fast Fourier transform.
 
@@ -17,8 +17,6 @@ def sinc1d(x, s, xp, norm = False):
   Returns:
     sp (array, floats): transformed signal to xp
   """
-
-  eps = 1.e-15
 
   # normalized sinc
   if norm:
@@ -53,7 +51,7 @@ def sinc1d(x, s, xp, norm = False):
     return sp
 
 
-def sincsq1d(x, s, xp, norm = False):
+def sincsq1d(x, s, xp, norm = False, eps = 1.e-6):
   """
   Calculate the fast sinc^2-transform by ways of the non-uniform fast Fourier transform.
 
@@ -71,8 +69,6 @@ def sincsq1d(x, s, xp, norm = False):
     sp (array, floats): transformed signal to xp
   """
   assert len(x) == len(s)
-
-  eps = 1.e-15
 
   # normalized sinc
   if norm:
