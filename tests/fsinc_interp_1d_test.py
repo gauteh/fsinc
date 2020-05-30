@@ -75,5 +75,5 @@ def test_1d_nu_to_nu3(plot):
     plt.show()
 
   ssp = np.sin(2*np.pi*xp) + 2 * np.cos(.2 * xp)
-  np.testing.assert_allclose(sp, ssp, rtol = .01, atol = .27)
+  np.testing.assert_allclose(sp, ssp, rtol = .01, atol = .39)
 

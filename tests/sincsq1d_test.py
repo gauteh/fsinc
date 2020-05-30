@@ -23,34 +23,34 @@ def test_sincsq1d_same():
 
   sp = fsinc.sincsq1d(x, s, x, True)
   dp = sincsq1d(x, s, x)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 2e-3)
 
 def test_sincsq1d_different_targets():
   x = np.linspace(-5, 5, 100)
   xp = np.linspace(-4, 3, 50)
 
-  s = np.random.uniform(-100, 100, x.size)
+  s = np.sin(x)
 
   sp = fsinc.sincsq1d(x, s, xp, True)
   dp = sincsq1d(x, s, xp)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 2e-3)
 
 def test_sincsq1d_nu_to_u():
   x = np.random.uniform(-5, 5, 100)
   xp = np.linspace(-4, 3, 50)
 
-  s = np.random.uniform(-100, 100, x.size)
+  s = np.sin(x)
 
   sp = fsinc.sincsq1d(x, s, xp, True)
   dp = sincsq1d(x, s, xp)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 2e-3)
 
 def test_sincsq1d_nu_to_nu():
   x = np.random.uniform(-5, 5, 100)
   xp = np.random.uniform(-4, 3, 50)
 
-  s = np.random.uniform(-100, 100, x.size)
+  s = np.sin(x)
 
   sp = fsinc.sincsq1d(x, s, xp, True)
   dp = sincsq1d(x, s, xp)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 2e-3)

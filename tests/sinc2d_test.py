@@ -13,7 +13,7 @@ def sinc2d(x, y, s, xp, yp):
 def test_sinc2d_2k(benchmark):
   x = np.linspace(-5, 5, 2000)
   y = np.linspace(-5, 5, 2000)
-  s = np.sin(x)
+  s = np.sin(x) * np.cos(y)
   xp = np.linspace(-4.5, 4.4, 2000)
   yp = np.linspace(-4.5, 4.4, 2000)
 
@@ -27,7 +27,7 @@ def test_sinc2d_same():
 
   sp = fsinc.sinc2d(x, y, s, x, y, True)
   dp = sinc2d(x, y, s, x, y)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 20e-4)
 
 def test_sinc2d_different_targets():
   x = np.linspace(-5, 5, 100)
@@ -40,7 +40,7 @@ def test_sinc2d_different_targets():
 
   sp = fsinc.sinc2d(x, y, s, xp, yp, True)
   dp = sinc2d(x, y, s, xp, yp)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 4e-4)
 
 def test_sinc2d_nu_to_u():
   x = np.random.uniform(-5, 5, 100)
@@ -49,11 +49,11 @@ def test_sinc2d_nu_to_u():
   xp = np.linspace(-4, 3, 50)
   yp = np.linspace(-2, 3.5, 50)
 
-  s = np.random.uniform(-100, 100, x.size)
+  s = np.sin(x) * np.cos(y)
 
   sp = fsinc.sinc2d(x, y, s, xp, yp, True)
   dp = sinc2d(x, y, s, xp, yp)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 20e-4)
 
 def test_sinc2d_nu_to_nu():
   x = np.random.uniform(-5, 5, 100)
@@ -62,8 +62,8 @@ def test_sinc2d_nu_to_nu():
   xp = np.random.uniform(-4, 3, 50)
   yp = np.random.uniform(-2, 3.5, 50)
 
-  s = np.random.uniform(-100, 100, x.size)
+  s = np.sin(x) * np.cos(y)
 
   sp = fsinc.sinc2d(x, y, s, xp, yp, True)
   dp = sinc2d(x, y, s, xp, yp)
-  np.testing.assert_almost_equal(sp, dp)
+  np.testing.assert_allclose(sp, dp, atol = 20e-4)
