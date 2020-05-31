@@ -20,16 +20,8 @@ def lgwt2d(nx, ny):
   """
   Helper for sinc2d, author: Gaute Hope, 2020
   """
-  xx = np.zeros((nx,))
-  yy = np.zeros((ny,))
-  wx = np.zeros((nx,))
-  wy = np.zeros((nx,))
-
-  for a in numba.prange(nx):
-    _, wx[a], xx[a] = glpair(nx, a + 1)
-
-  for b in numba.prange(ny):
-    _, wy[b], yy[b] = glpair(ny, b + 1)
+  xx, wx = lgwt(nx)
+  yy, wy = lgwt(ny)
 
   z = nx * ny
   xxx = np.zeros((z,))
@@ -41,46 +33,6 @@ def lgwt2d(nx, ny):
       xxx[a*nx + b] = xx[b]
       yyy[a*nx + b] = yy[a]
       www[a*nx + b] = wx[b] * wy[a]
-
-  return xxx, yyy, www
-
-@numba.njit(parallel = True, cache = True)
-def lgwt_tri_2d(nx, ny):
-  """
-  Helper for sincsq2d, author: Gaute Hope, 2020
-  """
-  xx = np.zeros((2*nx,))
-  wwx = np.zeros((2*nx,))
-
-  for a in numba.prange(nx):
-    _, wx, x = glpair(nx, a + 1)
-    xx[a] = x - 1
-    wwx[a] = wx * (2. - np.abs(x-1))
-
-    xx[a + nx] = x + 1
-    wwx[a + nx] = wx * (2. - np.abs(x+1))
-
-  yy = np.zeros((2*ny,))
-  wwy = np.zeros((2*ny,))
-
-  for a in numba.prange(ny):
-    _, wy, y = glpair(ny, a + 1)
-    yy[a] = y - 1
-    wwy[a] = wy * (2 - np.abs(y-1))
-
-    yy[a + ny] = y + 1
-    wwy[a + ny] = wy * (2 - np.abs(y+1))
-
-  z = 2*nx*2*ny
-  xxx = np.zeros((z,))
-  yyy = np.zeros((z,))
-  www = np.zeros((z,))
-
-  for a in numba.prange(2*ny):
-    for b in numba.prange(2*nx):
-      xxx[a*2*nx + b] = xx[b]
-      yyy[a*2*nx + b] = yy[a]
-      www[a*2*nx + b] = wwx[b] * wwy[a]
 
   return xxx, yyy, www
 
@@ -101,6 +53,27 @@ def lgwt_tri(nx):
     ww[a+nx] = w * (2 - np.abs(x+1))
 
   return xx, ww
+
+@numba.njit(parallel = True, cache = True)
+def lgwt_tri_2d(nx, ny):
+  """
+  Helper for sincsq2d, author: Gaute Hope, 2020
+  """
+  xx, wwx = lgwt_tri(nx)
+  yy, wwy = lgwt_tri(ny)
+
+  z = 2*nx*2*ny
+  xxx = np.zeros((z,))
+  yyy = np.zeros((z,))
+  www = np.zeros((z,))
+
+  for a in numba.prange(2*ny):
+    for b in numba.prange(2*nx):
+      xxx[a*2*nx + b] = xx[b]
+      yyy[a*2*nx + b] = yy[a]
+      www[a*2*nx + b] = wwx[b] * wwy[a]
+
+  return xxx, yyy, www
 
 @numba.njit(cache = True)
 def besselj1squared ( k ):
