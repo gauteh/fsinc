@@ -81,7 +81,7 @@ def sincsq1d(x, s, xp, norm = False, eps = 1.e-6):
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
 
   # calculate Legendre-Gauss quadrature weights
-  print('calculate Legendre-Gauss weights (using fastgl)', nx)
+  print('calculate Legendre-Gauss weights (using fastgl):', nx)
   xx, ww = fastgl.lgwt_tri(nx)
 
   # Fwd FT
