@@ -1,5 +1,6 @@
 import numpy as np
 
+import fsinc
 from .fsinc_2d import sinc2d
 
 def sinc2d_interp_u(x, y, s, xB, yB, xp, yp):
@@ -24,6 +25,9 @@ def sinc2d_interp_u(x, y, s, xB, yB, xp, yp):
   assert len(x.shape) == 1
   assert len(y.shape) == 1
   assert len(s.shape) == 1
+
+  x, xp = fsinc.zero_offset(x, xp)
+  y, yp = fsinc.zero_offset(y, yp)
 
   x = x * xB
   y = y * yB

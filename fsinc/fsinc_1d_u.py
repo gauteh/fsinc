@@ -1,5 +1,6 @@
 import numpy as np
 
+import fsinc
 from .fsinc_1d import sinc1d
 
 def sinc1d_interp_u(x, s, xp):
@@ -18,6 +19,7 @@ def sinc1d_interp_u(x, s, xp):
 
   """
   assert np.max(np.abs(np.diff(x) - (x[1] - x[0]))) < 1.e-15
+  x, xp = fsinc.zero_offset(x, xp)
 
   B = 1. / np.mean(np.diff(x))
   print('bandwidth:', B)

@@ -1,5 +1,6 @@
 import numpy as np
 
+import fsinc
 from .fsinc_2d import sinc2d, sincsq2d
 from .jacobian import jacobian_2d_sk, jacobian_2d_ktree
 
@@ -29,6 +30,9 @@ def sinc2d_interp_nu2(x, y, s, B, xp, yp):
   assert len(x.shape) == 1
   assert len(y.shape) == 1
   assert len(s.shape) == 1
+
+  x, xp = fsinc.zero_offset(x, xp)
+  y, yp = fsinc.zero_offset(y, yp)
 
   B = np.float(B)
   print("calcuating jacobian (2d)")
@@ -105,8 +109,11 @@ def sinc2d_interp_nu3(x, y, s, B, xp, yp):
   assert len(y.shape) == 1
   assert len(s.shape) == 1
 
+  x, xp = fsinc.zero_offset(x, xp)
+  y, yp = fsinc.zero_offset(y, yp)
+
   B = np.float(B)
-  print("calcuating jacobian (2d)")
+  # print("calcuating jacobian (2d)")
   # ws = jacobian_2d_sk(x, y)
   # ws = jacobi_2d_approx(x, y)
   # ws = jacobian_2d_ktree(x, y)

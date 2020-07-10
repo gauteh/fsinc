@@ -1,5 +1,6 @@
 import numpy as np
 
+import fsinc
 from .fsinc_1d import *
 
 def sinc1d_interp_nu2(x, s, xp, B = 3.):
@@ -19,6 +20,7 @@ def sinc1d_interp_nu2(x, s, xp, B = 3.):
   """
 
   print('mean bandlimit:', 1./np.max(np.diff(x)))
+  x, xp = fsinc.zero_offset(x, xp)
 
   B = np.float(B)
   print('bandlimit:', B)
@@ -52,6 +54,7 @@ def sinc1d_interp_nu3(x, s, xp, B = 3.):
   """
 
   print('mean bandlimit:', 1./np.max(np.diff(x)))
+  x, xp = fsinc.zero_offset(x, xp)
 
   B = np.float(B)
   print('bandlimit:', B)
