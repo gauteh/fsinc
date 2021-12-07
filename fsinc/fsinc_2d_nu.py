@@ -34,7 +34,7 @@ def sinc2d_interp_nu2(x, y, s, B, xp, yp):
   x, xp = fsinc.zero_offset(x, xp)
   y, yp = fsinc.zero_offset(y, yp)
 
-  B = np.float(B)
+  B = float(B)
   print("calcuating jacobian (2d)")
   # ws = jacobian_2d_sk(x, y)
   # ws = jacobi_2d_approx(x, y)
@@ -112,7 +112,7 @@ def sinc2d_interp_nu3(x, y, s, B, xp, yp):
   x, xp = fsinc.zero_offset(x, xp)
   y, yp = fsinc.zero_offset(y, yp)
 
-  B = np.float(B)
+  B = float(B)
   # print("calcuating jacobian (2d)")
   # ws = jacobian_2d_sk(x, y)
   # ws = jacobi_2d_approx(x, y)

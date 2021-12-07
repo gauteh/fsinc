@@ -22,7 +22,7 @@ def sinc1d_interp_nu2(x, s, xp, B = 3.):
   print('mean bandlimit:', 1./np.max(np.diff(x)))
   x, xp = fsinc.zero_offset(x, xp)
 
-  B = np.float(B)
+  B = float(B)
   print('bandlimit:', B)
 
   ws = jacobi_1d(x)
@@ -56,7 +56,7 @@ def sinc1d_interp_nu3(x, s, xp, B = 3.):
   print('mean bandlimit:', 1./np.max(np.diff(x)))
   x, xp = fsinc.zero_offset(x, xp)
 
-  B = np.float(B)
+  B = float(B)
   print('bandlimit:', B)
 
   ws = (np.pi / B) / sincsq1d(B * x, np.ones(x.shape), B * x) # use sinc^2 weights

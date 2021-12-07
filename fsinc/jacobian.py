@@ -16,7 +16,7 @@ def jacobian_2d_ktree(x, y):
   d = np.vstack((x,y)).T
   t = cKDTree(d)
 
-  (w, i) = t.query(d, [2], n_jobs = -1)
+  (w, i) = t.query(d, [2], workers = -1)
   return w.squeeze()
 
 @numba.njit(parallel = True, cache = True)
@@ -36,7 +36,7 @@ def jacobian_2d_sk(x, y):
   d = np.vstack((x,y)).T
   print("jacobian:", d.shape)
   from sklearn.neighbors import NearestNeighbors, KNeighborsTransformer
-  nbrs = NearestNeighbors(n_neighbors = 2, n_jobs = -1).fit(d)
+  nbrs = NearestNeighbors(n_neighbors = 2, workers = -1).fit(d)
   w, ii = nbrs.kneighbors(d, 2)
 
   return w[:,1].squeeze()

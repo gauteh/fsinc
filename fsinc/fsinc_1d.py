@@ -1,5 +1,5 @@
 import numpy as np
-import finufftpy as nufft
+import finufft as nufft
 from . import fastgl
 
 def sinc1d(x, s, xp, norm = False, eps = 1.e-6):
@@ -17,33 +17,30 @@ def sinc1d(x, s, xp, norm = False, eps = 1.e-6):
   Returns:
     sp (array, floats): transformed signal to xp
   """
-
+  
   # normalized sinc
   if norm:
     x = x * np.pi
     xp = xp * np.pi
 
   xm = np.max( [np.max(np.abs(x)), np.max(np.abs(xp)) ])
-
+  
   resample = 2 # resample rate
   nx = np.ceil(resample * np.round(xm + 3)).astype('int')
 
   print('calculate Legendre-Gauss weights (using fastgl), nodes:', nx)
   xx, ww = fastgl.lgwt(nx)
-
-  # Fwd FT
-  h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx (G-L nodes)
-  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0, upsampfac = 1.25)
-  assert status == 0
-
+  
+  # Fwd FT for h = signal at xx (G-L nodes)
+  # astypes needed to stop finufft complaining
+  h = nufft.nufft1d3(x, s.astype('complex128'), xx.astype('float64'), isign=-1, eps=eps, upsampfac=1.25)
+  
   # integrate signal using G-L quadrature
   ws = h * ww
-
-  # Inv FT
-  sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0, upsampfac = 1.25)
+  
+  # Inv FT for sp = signal at xx
+  sp = nufft.nufft1d3(xx.astype('float64'), ws, xp, isign=1, eps=eps, upsampfac=1.25)
   sp = .5 * sp
-  assert status == 0
 
   if np.all(np.isreal(s)):
     return sp.real
@@ -84,18 +81,14 @@ def sincsq1d(x, s, xp, norm = False, eps = 1.e-6):
   print('calculate Legendre-Gauss weights (using fastgl):', nx)
   xx, ww = fastgl.lgwt_tri(nx)
 
-  # Fwd FT
-  h = np.zeros(xx.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(x, s, -1, eps, xx, h, debug = 0, spread_debug = 0, upsampfac = 1.25)
-  assert status == 0
+  # Fwd FT for signal at xx
+  h = nufft.nufft1d3(x, s.astype('complex128'), xx.astype('float64'), isign=-1, eps=eps, upsampfac=1.25)
 
   # integrated signal
   ws = .25 * h * ww
 
-  # Inv FT
-  sp = np.zeros(xp.shape, dtype = np.complex128) # signal at xx
-  status = nufft.nufft1d3(xx, ws, 1, eps, xp, sp, debug = 0, spread_debug = 0, upsampfac = 1.25)
-  assert status == 0
+  # Inv FT for signal at xp
+  sp = nufft.nufft1d3(xx.astype('float64'), ws, xp, isign=1, eps=eps, upsampfac=1.25)
 
   if np.all(np.isreal(s)):
     return sp.real

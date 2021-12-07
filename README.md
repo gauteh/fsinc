@@ -17,6 +17,25 @@ There are a couple of examples in [examples/](examples/), tests can be run with 
 pip install .
 ```
 
+## Running local tests
+
+From the `fsinc` top directory, make sure you have `pytest` and
+`pytest-benchmark` installed in your
+python enviroment, then do:
+```sh
+PYTHONPATH=fsinc pytest
+```
+The path is needed so local `fastgl` module is seen,
+apparently (please help fix this).
+To do a subset of tests, eg just 1d ones, use:
+```sh
+PYTHONPATH=fsinc pytest -s -k "sinc1d"
+```
+Here the `-s` is if you want to insert print statements into the tests
+and see the outputs.
+
+
+
 ## Building docs
 
 Set up the environment in [doc/environment.yml](doc/environment.yml), install enough of tex-live and run `make` to generate `pdf` using `pandoc`.

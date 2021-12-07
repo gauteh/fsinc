@@ -22,7 +22,7 @@ def test_sinc1d_same():
 
   s = np.random.uniform(-100, 100, x.size)
 
-  sp = fsinc.sinc1d(x, s, x, True)
+  sp = fsinc.sinc1d(x, s, x, norm=True)
   dp = sinc1d(x, s, x)
   np.testing.assert_allclose(sp, dp, atol = 2e-3)
 
@@ -32,7 +32,7 @@ def test_sinc1d_different_targets():
 
   s = np.sin(x)
 
-  sp = fsinc.sinc1d(x, s, xp, True)
+  sp = fsinc.sinc1d(x, s, xp, norm=True)
   dp = sinc1d(x, s, xp)
   np.testing.assert_allclose(sp, dp, atol = 3e-3)
 
@@ -42,7 +42,7 @@ def test_sinc1d_nu_to_u():
 
   s = np.sin(x)
 
-  sp = fsinc.sinc1d(x, s, xp, True)
+  sp = fsinc.sinc1d(x, s, xp, norm=True)
   dp = sinc1d(x, s, xp)
   np.testing.assert_allclose(sp, dp, atol = 2e-3)
 
@@ -52,6 +52,6 @@ def test_sinc1d_nu_to_nu():
 
   s = np.sin(x)
 
-  sp = fsinc.sinc1d(x, s, xp, True)
+  sp = fsinc.sinc1d(x, s, xp, norm=True)
   dp = sinc1d(x, s, xp)
   np.testing.assert_allclose(sp, dp, atol = 2e-3)
