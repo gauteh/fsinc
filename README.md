@@ -20,21 +20,19 @@ pip install .
 ## Running local tests
 
 From the `fsinc` top directory, make sure you have `pytest` and
-`pytest-benchmark` installed in your
-python enviroment, then do:
+`pytest-benchmark` installed in your python enviroment, then do:
 ```sh
-PYTHONPATH=fsinc pytest
+$ pytest
 ```
-The path is needed so local `fastgl` module is seen,
-apparently (please help fix this).
 To do a subset of tests, eg just 1d ones, use:
 ```sh
-PYTHONPATH=fsinc pytest -s -k "sinc1d"
+pytest -s -k sinc1d
 ```
-Here the `-s` is if you want to insert print statements into the tests
-and see the outputs.
+Here the `-s` makes sure output is not caputred, while `-k` filters tests based
+on the string.
 
-
+> If you are having trouble with the `fastgl` module not being found, try using:
+> `PYTHONPATH=fsinc pytest`.
 
 ## Building docs
 
@@ -42,4 +40,6 @@ Set up the environment in [doc/environment.yml](doc/environment.yml), install en
 
 # References
 
-Greengard, L., Lee, J. Y., & Inati, S. (2006). The fast sinc transform and image reconstruction from nonuniform samples in k-space. Communications in Applied Mathematics and Computational Science, 1(1), 121–131. [https://doi.org/10.2140/camcos.2006.1.121](https://doi.org/10.2140/camcos.2006.1.121)
+* A. H. Barnett, J. F. Magland, and L. af Klinteberg. A parallel non-uniform fast Fourier transform library based on an "exponential of semicircle" kernel. SIAM J. Sci. Comput. 41(5), C479-C504 (2019).
+
+* Greengard, L., Lee, J. Y., & Inati, S. (2006). The fast sinc transform and image reconstruction from nonuniform samples in k-space. Communications in Applied Mathematics and Computational Science, 1(1), 121–131. [https://doi.org/10.2140/camcos.2006.1.121](https://doi.org/10.2140/camcos.2006.1.121)
