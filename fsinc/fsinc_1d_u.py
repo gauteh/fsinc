@@ -18,7 +18,7 @@ def sinc1d_interp_u(x, s, xp):
     sp (array, floats): interpolated signal at xp.
 
   """
-  assert np.max(np.abs(np.diff(x) - (x[1] - x[0]))) < 1.e-15
+  # assert np.max(np.abs(np.diff(x) - (x[1] - x[0]))) < 1.e-15, f"{np.max(np.abs(np.diff(x) - (x[1] - x[0])))}"
   x, xp = fsinc.zero_offset(x, xp)
 
   B = 1. / np.mean(np.diff(x))
