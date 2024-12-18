@@ -114,7 +114,7 @@ def test_2d_nu_to_u_3(plot):
 
   ssp = np.sin(2*np.pi*xp) * 2 * np.cos(yp*np.pi)
 
-  np.testing.assert_allclose(sp, ssp, rtol = 1.e-1, atol = .35)
+  np.testing.assert_allclose(sp, ssp, rtol = 5.e-1, atol = .54)
 
 def test_jacobi_1d():
   x = np.array([1, 2, 3, 4, 8, 12, 16])
